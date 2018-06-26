@@ -1,0 +1,207 @@
+ 
+#zTreeDemoBackground_1 {
+	position: absolute;
+	margin-top: 30px;
+	width: 100%;
+	height: 95%;
+}
+
+#zTreeDemoBackground_2 {
+	position: absolute;
+	margin-top: 5px;
+	height: 25px;
+	width: 50%;
+	left: 25%;
+}
+
+#zTreeDemoBackground_3 {
+	position: absolute;
+	margin-top: 30px;
+	left: 36%;
+	width: 50%;
+	height: 95%;
+}
+
+#zTreeDemoBackground_4 {
+	position: absolute;
+	margin-top: 30px;
+	width: 630px;
+	height: 90.3%;
+	left: 29%;
+	background-color: #FFFFFF;
+	border: 1px solid #617775;
+}
+
+#zTreeDemoBackground_5 {
+	position: absolute;
+	width: 627px;
+	height: 20%;
+	background-color: #FFFFFF;
+	border: 0px solid #617775;
+}
+
+#zTreeDemoBackground_6 {
+	position: absolute;
+	width: 627px;
+	height: 75%;
+	background-color: #FFFFFF;
+	top: 21%;
+	border: 0px solid #617775;
+}
+
+#zTreeDemoBackground_7 {
+	position: absolute;
+	width: 628px;
+	height: 12%;
+	background-color: #FFFFFF;
+	border: 0px solid #617775;
+}
+
+#zTreeDemoBackground_8 {
+	position: absolute;
+	width: 627px;
+	height: 85%;
+	background-color: #FFFFFF;
+	/* left: 25%; */
+	top: 10.5%;
+	border: 0px solid #617775;
+}
+
+#zTreeDemoBackground_10 {
+	position: absolute;
+	width: 450px;
+	background-color: #FFFFFF;
+	border: 0px solid #617775;
+}
+
+#zTreeDemoBackground_9 {
+	position: absolute;
+	width: 627px;
+	height: 12%;
+	top: 91%;
+	background-color: #FFFFFF;
+	border: 0px solid #617775;
+}
+
+div#rMenu {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	background-color: #231444;
+	text-align: left;
+	padding: 1px;
+}
+
+div#rMenu ul li {
+	margin: 1px 0;
+	padding: 0 10px;
+	cursor: pointer;
+	text-align: center;
+	font-weight: 500;
+	font-size: 13px;
+	list-style: none outside none;
+	background-color: #F0F0F0;
+}
+
+div#rMenus {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	background-color: #231444;
+	text-align: left;
+	padding: 1px;
+}
+
+div#rMenus  ul li {
+	margin: 1px 0;
+	padding: 0 10px;
+	cursor: pointer;
+	text-align: center;
+	font-weight: 500;
+	font-size: 13px;
+	list-style: none outside none;
+	background-color: #F0F0F0;
+}
+
+.list .btn_another input {
+	width: 88px !important;
+	height: 24px !important;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	background: #74a3dc;
+	border: none;
+	cursor: pointer;
+	font-family: "Î¢ÈíÑÅºÚ";
+	color: #fff;
+	font-size: 14px;
+}
+
+.list .btn_another input:hover {
+	background-color: #189ad8;
+}
+
+.confirm {
+	width: 100% !important;
+	float: left;
+}
+
+.confirm input {
+	margin-left: 40px;
+}
+
+.list li {
+	height: 35px;
+}
+
+.bottom-input {
+	width: 70%;
+	float: right;
+	margin-top: 10px;
+}
+
+.bottom-input li {
+	width: 320px;
+	float: right;
+	text-align: right;
+}
+
+.bottom-input li input {
+	width: 200px;
+	height: 24px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.fm-button {
+	padding: .0em 1.4em .2em 1.3em;
+}
+
+.graph {
+	width: 450px;
+	border: 1px solid #2B423B;
+	height: 25px;
+	border-radius: 3px;
+}
+
+#bar {
+	display: block;
+	background: #0E6DB0;
+	float: left;
+	height: 100%;
+	text-align: center;
+	border-radius: 5px
+}
+
+#bar_1 {
+	display: block;
+	background: #0E6DB0;
+	float: left;
+	height: 100%;
+	text-align: center;
+	border-radius: 5px
+}
+
+#barNum {
+	position: absolute;
+}
+ 

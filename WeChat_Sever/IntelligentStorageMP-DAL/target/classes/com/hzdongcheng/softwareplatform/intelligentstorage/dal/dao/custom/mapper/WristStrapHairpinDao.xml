@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.WristStrapHairpinDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.WristStrapHairpin">   
+    <id column="accountname" jdbcType="VARCHAR" property="accountname" />
+    <result column="cashierno" jdbcType="VARCHAR" property="cashierno" />
+    <result column="sendcardcount" jdbcType="VARCHAR" property="sendcardcount" />
+    <result column="collectcardcount" jdbcType="VARCHAR" property="collectcardcount" />
+  </resultMap>
+   
+  <sql id="queryCondition">
+      <if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and s.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+  </sql>
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+       SELECT	s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,COUNT(*) AS sendcardcount,COUNT(t.taketime) as collectcardcount
+       FROM storeinrecord s LEFT JOIN account a ON s.makeOpCode = a.accountCode LEFT JOIN 
+       takeoutrecord t ON (t.terminalid = s.terminalID AND t.boxid = s.boxID and t.storeInTime=s.storeInTime and t.usercardid=s.userCardID)
+       where 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM (select a.accountName,s.cashierNo,COUNT(*) 
+			as sendcardcount from storeinrecord s LEFT JOIN account a on s.makeOpCode=a.accountCode 
+			where 1=1			
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )) as a
+  </select>
+  
+  <select id="getMissList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+       select COUNT(*) as lossCardCount,a.accountName,(SELECT COUNT(*) from storeinrecord) as sendCardCount,
+       (SELECT COUNT(*) from cardandboxbound c where c.sync=2)as replaceCardCount,t.storeInTime,(select realMoney from takeoutrecord where type=3 LIMIT 0,1)as money
+       from takeoutrecord t LEFT JOIN account a ON a.accountCode=t.makeOpCode where type=3 
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY t.makeOpCode,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" )
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getMissCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM (select COUNT(*) as lossCardCount,a.accountName,(SELECT COUNT(*) from storeinrecord) as sendCardCount 
+        from takeoutrecord t LEFT JOIN account a ON a.accountCode=t.makeOpCode where type=3         			
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+       GROUP BY t.makeOpCode,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" )) as a
+  </select>  
+</mapper>

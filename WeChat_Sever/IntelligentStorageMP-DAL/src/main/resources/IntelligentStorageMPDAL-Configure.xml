@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:jdbc-mysql.properties" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${mysql.jdbc.driver}" />
+		<property name="url" value="${mysql.jdbc.url}" />
+		<property name="username" value="${mysql.jdbc.username}" />
+		<property name="password" value="${mysql.jdbc.password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${jdbc.pool.initialSize}"></property>
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="${jdbc.pool.maxActive}"></property>
+		<!-- 连接池最大空闲 -->
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}"></property>
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${jdbc.pool.minIdle}"></property>
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${jdbc.pool.maxWait}"></property>
+		
+		<property name="testWhileIdle" value="${jdbc.pool.testWhileIdle}"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}"></property>
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"></property>
+		<property name="validationQuery" value="${jdbc.pool.validationQuery}"></property>
+		
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 
+			<property name="typeAliasesPackage" 
+				value="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity, 
+				com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.procedure.entity, 
+				com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.entity, 
+				com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.view.entity" 
+			/> 
+
+			<property name="mapperLocations" 
+				value="classpath*:com/hzdongcheng/softwareplatform/intelligentstorage/dal/dao/custom/mapper/*.xml, 
+				classpath*:com/hzdongcheng/softwareplatform/intelligentstorage/dal/dao/procedure/mapper/*.xml, 
+				classpath*:com/hzdongcheng/softwareplatform/intelligentstorage/dal/dao/table/mapper/*.xml, 
+				classpath*:com/hzdongcheng/softwareplatform/intelligentstorage/dal/dao/view/mapper/*.xml" 
+			/> 
+		-->
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 自动扫描指定包下的Mapper映射接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" 
+			value="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.procedure.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.view.mapper" />
+	</bean>
+	
+	<!-- 使用"通用Mapper"实现
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" 
+			value="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.procedure.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.mapper,
+			com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.view.mapper" />
+	    <property name="properties">  
+	        <value>
+	            mappers=tk.mybatis.mapper.common.Mapper
+	        </value>  
+	    </property>  
+	</bean>
+	-->
+</beans>

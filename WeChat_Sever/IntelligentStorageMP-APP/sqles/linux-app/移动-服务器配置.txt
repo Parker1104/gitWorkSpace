@@ -1,0 +1,101 @@
+﻿1、文件配置
+	linux服务器   
+	地址：120.27.162.229
+
+	1.magui权限
+	用户名:magui   密码：magui_7&
+
+	2.api权限
+	用户名：magui_api    密码：magui_api@2
+
+	3.root权限
+	用户：root  密码：wzldcdz1!
+
+	4.app权限
+	用户名：magui_app  密码：magui_app_2@
+
+	5app_test权限
+	用户名： magui_app_test  密码 ：maguiAppTest  
+
+ 
+
+2、文件配置
+
+               （1 测试服务）
+         http://120.27.162.229:18480/IntelligentStorageMP-APP/myadmin.do#
+
+	     app_test权限
+	               用户名： magui_app_test  密码 ：maguiAppTest  
+ 
+          cd     /home/magui_app_test/netAllAppProjectTest
+
+
+          cd   /home/magui_app_test/netAllAppProjectTest/dcdz-front-server
+          cd   /home/magui_app_test/netAllAppProjectTest/dcdz-front-server/logs
+ 
+          cd /home/magui_app_test/netAllAppProjectTest/apache-tomcat-8.0.30-manager/bin
+          cd /home/magui_app_test/netAllAppProjectTest/apache-tomcat-8.0.30-manager/logs
+
+		 （测试服务）项目路径： /home/magui_app_test/netAllAppProjectTest
+		  1、前置端口：6004 55652 55654
+		  2、Tomcat端口  18480  （18490预留）
+		  3、数据库用户：netapptest  密码：test@1234
+		  4、数据库名：dcdzintelligentstoragetest
+
+		  mysql -unetapptest -ptest@1234;
+		  show databases;
+		  use dcdzintelligentstoragetest;
+ 
+          source  /home/magui_app_test/netAllAppProjectTest/mysqles/appppp.sql
+ 
+          mysql -u netapptest -p dcdzintelligentstoragetest < /home/magui_app_test/netAllAppProjectTest/mysqles/appppp.sql
+          test@1234
+
+
+
+
+
+       （2 正式服务）
+        http://120.27.162.229:18460/IntelligentStorageMP-APP/myadmin.do#
+	   1.app权限
+	           用户名：magui_app  密码：magui_app_2@
+
+        cd     /home/magui_app/netAllAppProject
+
+        cd   /home/magui_app/netAllAppProject/dcdz-front-server
+	    cd   /home/magui_app/netAllAppProject/dcdz-front-server/logs
+
+        cd  /home/magui_app/netAllAppProject/apache-tomcat-8.0.30-manager/bin
+        cd  /home/magui_app/netAllAppProject/apache-tomcat-8.0.30-manager/logs
+
+	        （正式服务）项目路径：/home/magui_app/netAllAppProject
+	    1、前置端口：6006 55642 55644
+	    2、Tomcat端口  18460  （18470预留）
+	    3、数据库用户：netapp  密码：root@1234
+	    4、数据库名：dcdzintelligentstorageapp
+
+
+	    mysql -unetapp -proot@1234;
+	    use dcdzintelligentstorageapp;
+ 
+        source  /home/magui_app/netAllAppProject/mysqles/appppp.sql
+ 
+        mysql -u netapp -p dcdzintelligentstorageapp < /home/magui_app/netAllAppProject/mysqles/appppp.sql
+        root@1234
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

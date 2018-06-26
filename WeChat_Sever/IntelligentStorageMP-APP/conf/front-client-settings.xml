@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<context>
+	<front-servers>
+		<!--前置服务配置 -->
+		<front_server id="front-server-1">
+			<!-- 前置服务名 -->
+			<serverName>front-server-1</serverName>
+			<!-- 前置服务绑定IP地址 -->
+			<pushReqURL>tcp://127.0.0.1:55642</pushReqURL>
+			<pushRepURL>tcp://127.0.0.1:55644</pushRepURL>
+		</front_server>
+	</front-servers>
+</context>

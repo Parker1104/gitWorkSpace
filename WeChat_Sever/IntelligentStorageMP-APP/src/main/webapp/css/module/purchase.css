@@ -1,0 +1,736 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body, h1, h2, h3, h4, h5, h6, input, select, iframe, p {
+    margin: 0;
+    padding: 0;
+    font-size:14px;
+    font-family: "微软雅黑";
+    font-weight: normal;
+}
+table {font-size: 12px;}
+*{ margin: 0; padding: 0; list-style: none;}
+body { background: #f5f5f5;}
+ul, ol, dl, li, dt, dd {
+    margin: 0;
+    padding: 0;
+}
+/*head样式*/
+.head {
+    width: 100%;
+    height: 88px;
+    background: #4a66a5;
+    min-width: 1000px;
+    border-bottom: 1px solid #ffffff;
+}
+
+.head img {
+    float: left;
+    border: none;
+}
+
+.head p {
+    float: right;
+    color: #ffffff;
+    height: 88px;
+    line-height: 88px;
+}
+
+.head p img {
+    margin: 27px 15px 0 0;
+    border: none;
+}
+
+html, body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+/*左侧菜单样式*/
+
+.main {
+    width: 100%;
+}
+
+.left {
+    width: 15%;
+    background: #4a66a5;
+    float: left;
+}
+
+dl, dt, dd {
+    display: block;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.leftsidebar_box {
+    width: 100%;
+    background-color: #4a66a5;
+}
+
+.leftsidebar_box dt {
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 36px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.leftsidebar_box dd {
+    background-color: #2d4784;
+    text-align: center;
+    line-height: 30px;
+    font-size:14px;
+}
+
+.leftsidebar_box dd a {
+    color: #ffffff;
+    line-height: 30px;
+}
+
+
+
+
+
+/*iframe样式*/
+.framebox {
+    width: 85%;
+    float: left;
+}
+
+.framebox iframe {
+    border: none;
+    width: 100%;
+}
+
+.title p {
+    font-size: 16px;
+    width: 95%;
+    line-height: 36px;
+    text-indent: 1em;
+    background: url(/images/jk.jpg) left no-repeat;
+    margin-left: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+
+/*员工管理*/
+.content {
+    width: 100%;
+    float: left;
+}
+
+.but {
+    height:30px;
+    width: 90%;
+    white-space: nowrap;
+    margin-left: 4%;
+    float: left;
+}
+
+.but span {
+  float:right;
+  font-size: 14px;
+  line-height: 36px;
+  margin-top: 5px;
+}
+
+  .but span a {
+    width: 88px;
+    height: 24px;
+    display: block;
+    background-color: #74a3dc;
+    color: #f5f5f5;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 3px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+      float: right;
+      margin-left: 20px;
+
+  }
+
+    .but span a:hover {
+      background-color: #189ad8;
+      color: #fff;
+    }
+
+.but1 {
+    height:30px;
+    width: 90%;
+    white-space: nowrap;
+    margin-left: 1%;
+    float: left;
+}
+
+.but1 span {
+    float:left;
+    font-size: 14px;
+    line-height: 30px;
+    margin-top: 5px;
+}
+
+.but1 span a {
+    width: 88px;
+    height: 24px;
+    display: block;
+    background-color: #74a3dc;
+    color: #f5f5f5;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 3px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    float: right;
+    margin-left: 20px;
+
+}
+
+.but1 span a:hover {
+    background-color: #189ad8;
+    color: #fff;
+}
+
+
+/*form li表单*/
+
+.list {
+    width: 95%;
+    float: left;
+}
+
+.list li {
+    font-size:14px;
+    list-style: none;
+    float: left;
+    width: 300px;
+    height: 35px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.list li input {
+    width: 200px;
+    height: 24px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.list select {
+    width: 200px;
+    height: 24px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.list-1 {
+    width: 95%;
+    display: block;
+    float: left;
+}
+
+.list-1 li {
+    font-size:14px;
+    list-style: none;
+    float: left;
+    width: 276px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.list-1 li input {
+    width: 180px;
+    height: 24px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.list-1 select {
+    width: 180px;
+    height: 24px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+
+.list li .btn {
+    width: 88px;
+    height: 30px;
+    border-radius: 5px;
+    float: left;
+    background: #29a1b1;
+    border: none;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    color: #fff;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.list .addres {
+    width: 80%;
+    float: left;
+    margin-left: 30px;
+    text-align: left;
+    display: inline;
+}
+
+.list .check input {
+    width: 15px;
+    height: 15px;
+}
+
+.list .check {
+    width: 80%;
+    float: left;
+    margin-left: 30px;
+    text-align: left;
+    display: block;
+}
+
+.list .remark {
+    width:100% !important;
+    float: left;
+    text-align: left;
+   height: 35px;
+    display: block;
+    text-indent: 57px;
+}
+
+.list .remark input {
+    width: 66%;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.list-1 .remark {
+    width:100% !important;
+    float: left;
+    text-align: left;
+    height: 35px;
+    display: block;
+    text-indent: 57px;
+}
+
+.list-1 .remark input {
+    width: 66%;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+/*form表单li结束*/
+
+
+
+
+
+
+
+
+
+
+
+/*form表单table*/
+/*.list table {
+    margin-left: 10px;
+    border: none;
+    font-size: 14px;
+    float: left;
+}
+
+.list table td {
+    height: 40px;
+    width: 150px;
+    line-height: 24px;
+    white-space: nowrap;
+    position: relative;
+}
+
+.list table input {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.list table select {
+    height: 30px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 120px;
+    position: relative;
+    bottom: 8px;
+}*/
+/*form表单table结束*/
+
+
+
+
+/*会员基本信息*/
+
+.good {
+    position: relative;
+    width: 100%;
+    float: left;
+    position: relative;
+}
+
+.good h1,h2 {
+    font-size: 16px;
+    width: 95%;
+    line-height:40px;
+    text-indent: 1em;
+    background: url(/images/purchase/jk.jpg) left no-repeat;
+    margin-left: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    float:left;
+}
+.good h2{
+     height: 40px;
+    margin-bottom: 10px;
+}
+
+.good h1,h2 label{
+    float:left;
+    margin-right: 10px;
+    font-size: 16px;
+}
+.good h1,h2 span{
+    font-size: 14px;
+}
+#commoditybarcode {
+    width: 200px;
+    height: 24px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+ .good table {
+   width: 99%;
+    border: 1px solid #93dafb;
+    border-collapse: collapse;
+    float: left;
+    margin-top: 10px;
+    margin-left: 1%;
+    font-size:14px;
+    color: #000;
+    z-index: 99;
+     background: #fff;
+  }
+
+    .good table tr:hover {
+      /*background: url(/images/purchase/tab-bghover.png) repeat-x;*/
+        background-color: #DAEFFF;
+    }
+
+    .good table td {
+      height: 40px;
+      border: 1px solid #93dafb;
+      border-collapse: collapse;
+      line-height: 36px;
+        text-align: center;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+		
+		.tab_title {
+        background: url(/images/purchase/tab-bg.png) repeat-x;
+    }
+
+    .good h1  a {
+        width: 88px;
+        height: 24px;
+        display: block;
+        background-color: #74a3dc;
+        color: #f5f5f5;
+        font-size: 14px;
+        text-decoration: none;
+        text-indent: 0em;
+        text-align: center;
+        line-height: 24px;
+        margin-top: 5px;
+        border: 1px solid #e0e0e0;
+        border-radius: 3px;
+        position: absolute;
+        left: 150px;
+        top: 20px;
+    }
+
+    .good span a:hover {
+        background-color: #189ad8;
+        color: #fff;
+    }
+
+.good h2  a {
+    width: 88px;
+    height: 24px;
+    display: block;
+    background-color: #74a3dc;
+    color: #f5f5f5;
+    font-size: 14px;
+    text-decoration: none;
+    text-indent: 0em;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 7px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    top: 20px;
+    float: left;
+    margin-left: 10px;
+}
+
+.good span a:hover {
+    background-color: #189ad8;
+    color: #fff;
+}
+
+		
+	#commoditybycategory {
+        border: 1px solid #cdedff;
+        border-collapse: collapse;
+        float: left;
+        margin-top: 20px;
+        margin-left: 30px;
+        font-size: 16px;
+        color: #000;
+        z-index: 99;
+        float: left;
+    }
+
+    #commoditybycategory tr:hover {
+        background-color: #DAEFFF;
+    }
+
+    #commoditybycategory td {
+        height: 36px;
+        border: 1px solid #cdedff;
+        border-collapse: collapse;
+        line-height: 36px;
+        text-align: center;
+        font-size: 14px;
+    }
+.selectgood {
+    display: none;;
+    width:850px;
+    height:300px;
+    overflow: auto;
+    z-index: 999;
+    float: left;
+    position: absolute;
+    top: 50px;
+    background-color: #fff;
+    outline:none;
+}
+
+.selectgood table {
+    width: 100%;
+    border: 1px solid #93dafb;
+    border-collapse: collapse;
+    float: left;
+    font-size: 12px;
+    font-family: "微软雅黑" !important;
+    color: #000;
+    background-color: #fff;
+}
+
+.selectgood table tr:hover {
+    background-color: #DAEFFF;
+}
+.selectgood table tr:focus {
+    background-color: #DAEFFF;
+}
+
+.selectgood table td {
+    height: 36px;
+    border: 1px solid #93dafb;
+    border-collapse: collapse;
+    line-height: 36px;
+    text-align: left;
+    padding-left: 5px;
+}
+		
+/*商品分类*/
+/*.classify {
+    width: 220px;
+    height: 360px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin: 20px 0 0 20px;
+    float: left;
+}
+
+.classify .subclass {
+    font-size: 14px;
+    margin-left: 60px;
+    line-height: 35px;
+    list-style: url(/images/purchase/slist-bg.jpg);
+}
+
+.classify li {
+    margin-left: 70px;
+}*/
+
+
+/*按钮列表*/
+.btnslist {
+    width: 100px;
+    height: 500px;
+    margin: 20px 0 0 30px;
+    float: left;
+}
+
+.btn {
+    width: 88px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 3px;
+    float: left;
+    background: #29a1b1;
+    border: none;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    color: #fff;
+    font-size: 14px;
+}
+
+
+
+
+.list-con {
+    height: 360px;
+    float: left;
+}
+
+.uploadpic {
+    width: 360px;
+    height: 360px;
+    float: left;
+}
+
+.clubmem-tab {
+    width: 80%;
+    height: 300px;
+}
+
+.clubmem-foot {
+    width: 99%;
+    float: left;
+    margin-top: 10px;
+    margin-left: 2%;
+}
+
+.clubmem-foot h5 {
+    width: 94%;
+    border: 1px solid #cdedff;
+    border-top: none;
+    height: 30px;
+    background: #fff !important;
+    line-height: 30px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.clubmem-foot h5 span {
+	  float:right;
+    margin-right: 15px;
+}
+
+.clubmem-foot span a {
+	  width: 88px;
+    height: 24px;
+    display: block;
+    background-color: #74a3dc;
+    color: #f5f5f5;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 3px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+}
+
+.clubmen-foot span a:hover {
+	 background-color: #189ad8;
+   color: #fff;
+	}
+.join { width: 360px !important; float: left; margin-left: 40px;}
+.join span { margin-right: 20px;}
+
+
+
+/*为file添加样式*/
+input[type="file"] { width: 64px !important; height: 20px !important;}
+.follow {
+    float: left;
+    text-align: left!important;
+    margin-left: 80px !important;
+    margin-top: 10px;
+}
+#followOrder {
+    width: 65px !important;
+    height: 30px !important;
+    line-height: 30px;
+    border: none!important;
+}
+
+ .block span { float: right; margin-right: 30px;}
+
+
+.remark_update { width: 70%; height: 35px; line-height: 35px; padding-left: 56px; text-align: left!important;}
+.newinput { margin-top: 10px; float: left;}
+.newinput input,select { font-size: 12px !important;}
+
+.mess { width:96%; margin-left:1%;}
+.mess h3 {width: 50%; font-size:12px; font-weight:normal; float:left; line-height:30px;}
+.mess h4 {width: 50%; font-size:12px; font-weight:normal; float:left; line-height:30px;}
+.mess p { font-size:12px; font-weight:normal; line-height:30px;}
+.mess p span {width :120px; display:inline-block;}
+
+/*2015 10 22修改整体进销存样式*/
+.list-1 li a {
+    width: 88px;
+    height: 24px;
+    display: block;
+    background-color: #74a3dc;
+    color: #f5f5f5;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    float: right;
+    margin-right: 15px;
+}
+
+.list-1 li a:hover {
+    background-color: #189ad8;
+    color: #fff;
+}

@@ -1,0 +1,367 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body, h1, h2, h3, h4, h5, h6, input, select, iframe, p {
+    margin: 0;
+    padding: 0;
+    font-size:14px;
+    font-family: "微软雅黑";
+    font-weight: normal;
+}
+
+ul, ol, dl, li, dt, dd {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/*head样式*/
+.head {
+    width: 100%;
+    height: 47px;
+    background: #24466c;
+    min-width: 1000px;
+}
+
+    .head img {
+        float: left;
+        border: none;
+        margin: 8px 0 0 20px;
+    }
+
+.quit-btn {
+    width: 30px;
+    height: 31px;
+    background: url(/images/common/quit.png) no-repeat;
+    border: none;
+    float: right;
+    margin: 10px 20px 0 10px;
+}
+
+
+
+.head p {
+    float: right;
+    color: #ffffff;
+    height: 40px;
+    line-height: 40px;
+}
+
+    .head p img {
+        margin: 8px 15px 0 0;
+        border: none;
+    }
+
+html, body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+/*左侧菜单样式*/
+
+.main {
+    width: 100%;
+}
+
+.left {
+    width: 15%;
+    background: #2f5b8c;
+    float: left;
+}
+
+
+
+/*iframe样式*/
+.right {
+    width: 85%;
+    float: left;
+}
+
+    .right iframe {
+        border: none;
+        width: 100%;
+    }
+
+
+
+
+
+/*员工管理*/
+.content {
+    width: 100%;
+}
+
+
+
+.btns1 {
+    float: left;
+    width: 88px;
+    height: 31px;
+    border-radius: 5px;
+    float: left;
+    background: #6188e2;
+    border: none;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    color: #fff;
+    font-size: 14px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.btns2 {
+    width: 88px;
+    height: 31px;
+    border-radius: 5px;
+    float: left;
+    background: #4a66a5;
+    border: none;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    color: #fff;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+/*form li表单*/
+
+.list {
+    width: 95%;
+    margin: 10px 0 20px 0;
+    display: block;
+}
+
+    .list li {
+        font-size: 16px;
+        height: 40px;
+        float: left;
+        width: 280px;
+        white-space: nowrap;
+        text-align: right;
+    }
+
+        .list li input {
+            width: 180px;
+            height: 24px;
+            margin-top: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+        }
+
+    .list select {
+        width: 180px;
+        height: 24px;
+        margin-top: 15px;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+    }
+
+    .list li .btn {
+        width: 88px;
+        height: 24px;
+        border-radius: 3px;
+        float: left;
+        background: #29a1b1;
+        border: none;
+        cursor: pointer;
+        font-family: "微软雅黑";
+        color: #fff;
+        font-size: 14px;
+    }
+
+    .list .addres {
+        width: 80%;
+        float: left;
+        margin-left: 30px;
+        text-align: left;
+        display: inline;
+    }
+
+    .list .check input {
+        width: 15px;
+        height: 15px;
+    }
+
+    .list .check {
+        width: 80%;
+        float: left;
+        margin-left: 30px;
+        text-align: left;
+        display: block;
+    }
+
+    .list .remark {
+        width: 90%;
+        float: left;
+        text-align: left;
+				margin-left:60px;
+        display: block;
+    }
+
+        .list .remark input {
+            width: 60%;
+						height:50px;
+        }
+
+    /*form表单li结束*/
+
+
+
+
+
+
+
+
+
+
+
+    /*form表单table*/
+    .list table {
+        margin-left: 10px;
+        border: none;
+        font-size: 14px;
+        float: left;
+    }
+
+        .list table td {
+            height: 40px;
+            width: 150px;
+            line-height: 24px;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .list table input {
+            width: 120px;
+            height: 30px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        .list table select {
+            height: 30px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            width: 120px;
+            position: relative;
+            bottom: 8px;
+        }
+/*form表单table结束*/
+
+
+
+
+/*会员基本信息*/
+
+.message {
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-top: 30px;
+}
+
+
+
+        .message h1 span {
+            margin-left: 10px;
+            font-size: 14px;
+						float:left;
+        }
+				.message h1 label{
+					  float:left;
+					}
+
+
+/*商品分类*/
+.classify {
+    width: 220px;
+    height: 360px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin: 20px 0 0 20px;
+    float: left;
+}
+
+
+
+    .classify li {
+        margin-left: 70px;
+    }
+
+
+/*按钮列表*/
+.btnslist {
+    width: 100px;
+    height: 500px;
+    margin: 20px 0 0 30px;
+    float: left;
+}
+
+.btn {
+    width: 88px;
+    height: 30px;
+    line-height: 31px;
+    border-radius: 5px;
+    float: left;
+    background: #29a1b1;
+    border: none;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    color: #fff;
+    font-size: 14px;
+    margin: 55px 0 0 0;
+}
+
+
+
+
+.list-con {
+    height: 360px;
+    float: left;
+}
+
+.uploadpic {
+    width: 360px;
+    height: 360px;
+    float: left;
+}
+
+.head ul {
+	 width:90%; 
+	 margin-left:5%;
+	 }
+	 
+.head li { 
+  width:100px;
+  float:left;
+	list-style:none;
+	}	 
+	.head li a { 
+	font-size:14px;
+	color:#fff;
+	}
+
+#nav {display:block; height:41px; width:100%; float:left; padding:0; margin:0; list-style:none; white-space:nowrap; line-height:41px; background:url(/images/common/border-bg.png) bottom repeat-x ;}
+#nav li {float:left;width:108px; height:37px; text-align: center;}
+#nav li a {display:block; line-height:39px; text-decoration:none; padding:0 0 0 5px; text-align:center; color:#333; font-size:14px;}
+#nav li a:hover { background:url(/images/common/menu-bg.png) no-repeat bottom; border: none;}
+#nav li a img { border:none; float:left; margin-top:10px; margin-left:10px;}
+#menu_con{ width:100%; border-top:none;}
+#menu_con dt { width:100%; text-indent: 25px; height:30px; line-height:30px;}
+#menu_con dt a { color:#fff; text-decoration:none; font-size:14px; width:100%; height:30px; display:block; float: left;}
+#menu_con dt a img { float: left; margin-top: 10px; border: none;}
+#menu_con dt a:hover { color:#fff;  background:#218ce5;
+    border: none;}
+.tag{ padding:10px; overflow:hidden;}
+.tag dt a { text-decoration:none; font-size:14px; width:100%; height:30px; display:block; text-indent: 25px; color: #f4f4f4; line-height: 30px; text-decoration: none;}
+.tag dt a img {float: left; margin-top: 10px; border: none;}
+.tag dt a:hover { color:#fff;  background:#218ce5;  border: none;}
+.tag dd a { text-decoration:none; font-size:12px!important; width:100%; height:30px; line-height: 30px; display:block; text-indent: 45px; color: #f4f4f4; text-decoration: none;}
+.tag dd a img { float: left; margin-top: 10px; border: none;}
+.tag dd a:hover { color:#fff;  background:#218ce5;  border: none;}
+.selected{ background:url(/images/common/menu-bg.png) no-repeat bottom; border: none; color:#000 !important;}
+	 
+	 
+	 
+	 
+	 
+	 

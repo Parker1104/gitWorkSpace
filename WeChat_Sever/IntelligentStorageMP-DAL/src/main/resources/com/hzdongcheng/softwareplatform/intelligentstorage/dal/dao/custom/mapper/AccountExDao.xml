@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.AccountExDao">
+  <resultMap id="BaseResultMap" type="AccountEx">
+    <id column="accountCode" jdbcType="VARCHAR" property="accountcode" />
+    <result column="accountName" jdbcType="VARCHAR" property="accountname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="EMail" jdbcType="VARCHAR" property="email" />
+    <result column="makeDate" jdbcType="TIMESTAMP" property="makedate" />
+    <result column="makeOpCode" jdbcType="VARCHAR" property="makeopcode" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="cashierflag" jdbcType="INTEGER" property="cashierflag" /> 
+    <result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+    <association property="areaEntity" column="areacode" javaType="AreaEntity" select="findAreaEntityById"/>
+    <association property="roleEntity" column="rolecode" javaType="RoleEntity" select="findRoleEntityById" />
+  </resultMap>
+  
+  <resultMap id="RoleResultMap" type="RoleEntity">
+    <id column="roleCode" jdbcType="INTEGER" property="rolecode" />
+    <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  
+  <resultMap id="AreaResultMap" type="AreaEntity">
+    <id column="areaCode" jdbcType="VARCHAR" property="areacode" />
+    <result column="areaName" jdbcType="VARCHAR" property="areaname" />
+    <result column="areaShortName" jdbcType="VARCHAR" property="areashortname" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List"> 
+    accountCode, areaCode, roleCode, accountName, `password`, address, telephone, EMail, 
+    makeDate, makeOpCode, memo, lastModifyTime, cashierflag
+  </sql>
+       <sql id="queryCondition">
+      <if test="queryParam.accountcode!= null and queryParam.accountcode!=0">
+            and a.accountcode = #{queryParam.accountcode}
+      </if>
+      <if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountname = #{queryParam.accountname,jdbcType=INTEGER}
+      </if>
+      <if test="queryParam.telephone!= null and queryParam.telephone!=''">
+            and a.telephone = #{queryParam.telephone,jdbcType=INTEGER}
+      </if>
+      <if test="queryParam.areacode!= null and queryParam.areacode!=''">
+            and a.areacode like concat(#{queryParam.areacode,jdbcType=VARCHAR},'%')
+      </if>
+
+   </sql>  
+<!--      <sql id="queryCondition">
+      <where>
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+		      <if test="queryParam.accountcode != null and queryParam.accountcode !=0">
+		          and  accountCode = #{queryParam.accountcode}
+		      </if>
+		      <if test="queryParam.accountname != null and queryParam.accountname!=''">
+		           and a.accountName like '%${queryParam.accountname}%'
+		      </if>
+	      </trim>
+      </where>
+    </sql> --> 
+  <select id="selectByExampleEx" parameterType="AccountEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyEx" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where accountCode = #{accountcode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAccountRoleCode" parameterType="java.util.List" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where roleCode = #{rolecode,jdbcType=INTEGER}
+  </select>
+  <select id="findAreaEntityById" parameterType="java.lang.String" resultMap="AreaResultMap">
+  	select * from Area where areacode=#{id};
+  </select>
+  
+   <select id="findRoleEntityById" parameterType="int" resultMap="RoleResultMap">
+  	select * from Role where rolecode=#{id};
+  </select>
+</mapper>

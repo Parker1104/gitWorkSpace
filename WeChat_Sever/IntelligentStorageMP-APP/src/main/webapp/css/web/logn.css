@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin: 0; padding: 0;}
+body { width:100%; background-color:#3675b7; font-family:"微软雅黑"; }
+.logn { width:1080px; height:508px; margin:0 auto; margin-top:150px; background:url(/images/logn.png) center no-repeat;}
+.lognin { width:350px; height:300px; float:right; margin:100px 85px 0 0;}
+.lognin li { font-family:"微软雅黑"; font-size:16px; width:230px; margin-left:25px; height:35px; line-height:35px; list-style:none; margin-top:20px;}
+.lognin li input { width:160px; height:30px; border:1px solid #cdcece; border-radius:3px; font-size:14px; line-height:30px; text-indent: 5px;}
+.btn { width:300px; float:left; margin-left:25px; margin-top:30px;}
+.btn input { width:90px; height:34px; border-radius:4px; background-color:#437fbe; margin-left:40px; border:none; font-size:16px; font-family:"微软雅黑"; color:#fff;}
+p { width:100%; line-height:40px; font-size:14px;  color:#fff; margin-top:30px; text-align:center;}

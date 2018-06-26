@@ -1,0 +1,134 @@
+@charset "utf-8";
+/* CSS Document */
+body, h1, h2, h3, h4, h5, h6, input, select, iframe, p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    font-weight: normal;
+}
+*{ margin: 0; padding: 0;}
+body { background:#f5f5f5;}
+table {font-size: 12px;}
+ul, ol, dl, li, dt, dd {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.title p {
+    font-size: 16px;
+    width: 95%;
+    line-height: 40px;
+    text-indent: 1em;
+    background: url(/images/purchase/jk.jpg) left no-repeat;
+    margin-left: 10px;
+    border-bottom: 1px solid #cccccc;
+}
+
+
+
+.content {
+    width: 100%;
+    float: left;
+}
+
+.list {
+    width: 95%;
+    margin: 10px 0 20px 0;
+    display: block;
+}
+
+    .list li {
+        font-size:14px;
+        height: 40px;
+        float: left;
+        margin-left: 20px !important;
+        width: 300px;
+        white-space: nowrap;
+        text-align: left;
+    }
+    .list li span {
+        color:#7c7c7c;
+        text-decoration:underline;
+    }
+		
+    .list .remark {
+        width: 90%;
+        float: left;
+        text-align: left;
+        margin-left:20px;
+        display: block;
+    }
+
+  .list .billcode {
+       width: 30%;
+       float: left;
+       text-align: left;
+       margin-left:20px;
+       display: block;
+   }
+  .list .arrivalplace {
+      width: 60%;
+      float: left;
+      text-align: left;
+      margin-left:20px;
+      display: block;
+   }
+   .message {
+        width: 100%;
+        float: left;
+   }
+
+  .message table {
+    width:100%;
+    border: 1px solid #93dafb;
+    border-collapse: collapse;
+    float: left;
+    margin-top: 10px;
+    font-size:12px;
+    color: #000;
+    font-family: "微软雅黑";
+  }
+.tab_title {
+  background: url(/images/purchase/tab-bg.png) repeat-x;
+}
+
+    .message table tr:hover {
+      background-color: #DAEFFF;
+    }
+
+    .message table td {
+      width: 100px;
+      height: 36px;
+      border: 1px solid #93dafb;
+      border-collapse: collapse;
+      line-height: 36px;
+      text-align: center;
+    }
+
+    .message h1 {
+        font-size: 16px !important;
+        width: 95%;
+        line-height: 40px;
+        text-indent: 1em;
+        background: url(/images/purchase/jk.jpg) left no-repeat;
+        margin-left: 10px;
+        border-bottom: 1px solid #d6d6d6;
+		float:left;
+    }
+
+   .message h1 span {
+       margin-left: 10px;
+       font-size: 16px;
+       float:left;
+   }
+    .message h1 label{
+        float:left;
+        font-size: 16px !important;
+    }
+.list-pop { width:95%;  margin:10px 0 10px 0;}
+.list-pop li {font-size:14px; height:36px ; list-style: none;  width: 45%; white-space:nowrap; text-align:right; float: left;}
+.list-pop li input { width: 200px; height: 24px; border: 1px solid #cdedff; border-radius: 3px;}
+.list-pop1 { width:95%;  margin:10px 0 10px 0;}
+.list-pop1 li {font-size:14px;  height:36px ; list-style: none;  width: 45%; white-space:nowrap; margin-left: 10px; text-align:left; float: left;}
+.list-pop1 li input { width: 200px; height: 24px; border: 1px solid #cdedff; border-radius: 3px;}

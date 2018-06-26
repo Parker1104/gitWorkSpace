@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.CardAndBoxInfoDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.CardAndBoxInfo">  
+    <id column="idcode" jdbcType="VARCHAR" property="idcode" />
+    <id column="usercardid" jdbcType="VARCHAR" property="usercardid" />
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <id column="displayname" jdbcType="VARCHAR" property="displayname" />
+    <result column="boxid" jdbcType="VARCHAR" property="boxid" />   
+  </resultMap>  
+  
+  <sql id="Base_Column_List">   
+    terminalID, boxID, userCardID, storeInTime, userType, userName, idType, idCode, telephone, 
+    address, company, department, subDepartment, effectiveDays, money, realMoney, `state`, 
+    makeOpCode, memo
+  </sql>
+  <sql id="queryCondition">
+      <if test="queryParam.displayname!= null and queryParam.displayname!=''">
+            and t.displayname = #{queryParam.displayname} 
+      </if>     
+      <if test="queryParam.idcode!= null and queryParam.idcode!=''">
+            and u.idcode = #{queryParam.idcode} 
+      </if>
+      <if test="queryParam.usercardid!= null and queryParam.usercardid!=''">
+            and s.usercardid = #{queryParam.usercardid} 
+      </if>
+      <if test="queryParam.username!= null and queryParam.username!=''">
+            and u.username = #{queryParam.username} 
+      </if>          
+  </sql>
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+	      select u.idCode, s.userCardID, u.userName,t.displayName,s.boxID from storeinrecord s,`user` u,terminal t
+	      where u.userCardID = s.userCardID
+	      and t.terminalID = s.terminalID and s.state=2
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        order by s.storeInTime desc
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+       select count(*) from storeinrecord s,`user` u,terminal t
+       where u.userCardID = s.userCardID
+       and t.terminalID = s.terminalID and s.state=2			
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+  </select>
+</mapper>

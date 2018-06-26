@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+body, h1, h2, h3, h4, h5, h6, p { margin: 0; padding: 0; font-size: 12px; font-family: "微软雅黑"; }
+ul, ol, dl, li, dt, dd { list-style-type: none; margin: 0; padding: 0; }
+
+/*iframe样式*/
+.title { width:100%; height:49px; border-bottom:1px solid #d6d6d6;}
+.title p { font-size:16px; line-height:49px; text-indent:1em; background:url(../img/jk.jpg) left no-repeat; margin-left:10px;}
+
+
+
+/*员工管理*/
+.content { width:100%; float: left;}
+.but { height:31px; margin:40px 0 0 40px;}
+.btns1 { width: 88px; height: 31px; border-radius: 5px; float: left; background: #b2b2b2; border: none; cursor: pointer; font-family: "微软雅黑"; color: #fff; font-size: 14px; margin-left:20px;}
+.btns2 { width: 88px !important; height: 24px; border-radius: 3px; float: left; background: #29a1b1; border: none; cursor: pointer; font-family: "微软雅黑"; color: #fff; font-size: 14px;}
+.list { width:80%; height:auto!important; height:150px; min-height:150px; margin:20px 0 20px 50px; padding-top:20px;}
+.list li {font-size:12px; height:40px; line-height:40px; float:left; margin-left:30px;}
+.list li input { width:120px; height:30px; margin-top:15px; border:1px solid #cccccc; border-radius:5px;}
+.list li select { width:120px;  height:30px; margin-top:15px; border:1px solid #cccccc; border-radius:5px;}
+.tab { width:100%; float:left; margin-top:20px;}
+.tab table { width:1050px; border:1px solid #cccccc; border-collapse:collapse; margin-left:50px;}
+.tab table td { width:100px; border:1px solid #cccccc; border-collapse:collapse; height:30px; font-size:14px; text-align:center; line-height:30px;}
+
+
+/*商品分类*/
+.classify { width:250px; height:500px; border:1px solid #cccccc; border-radius:5px;margin:20px 0 0 30px; float:left;}
+.content p{ font-size:16px; margin:20px 0 0 30px; text-indent:1.5em; background:url(../img/list-bg.jpg) left no-repeat;}
+.classify .subclass { font-size:14px; margin-left:60px; line-height:35px; list-style:url(../img/slist-bg.jpg);}
+.classify li { margin-left:70px;}
+
+.btnslist { width:200px; height:500px; margin:20px 0 0 30px; float:left;}
+.btn { width: 88px; height: 31px; line-height:31px; border-radius: 5px; float: left; background:#29a1b1; border: none; cursor: pointer; font-family: "微软雅黑"; color: #fff; font-size: 14px; margin:55px 0 0 30px;}
+
+
+
+
+
+
+
+
+

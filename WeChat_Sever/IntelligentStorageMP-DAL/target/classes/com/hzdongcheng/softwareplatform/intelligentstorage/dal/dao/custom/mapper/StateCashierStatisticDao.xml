@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.StateCashierStatisticDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.StateCashierStatistic">   
+    <id column="makeopcode" jdbcType="VARCHAR" property="makeopcode" />
+    <result column="cashierno" jdbcType="VARCHAR" property="cashierno" />
+    <result column="storeintime" jdbcType="DATE" property="storeintime" />
+    <result column="accountname" jdbcType="VARCHAR" property="accountname" />
+    <result column="incount" jdbcType="VARCHAR" property="incount" />
+    <result column="inmoney" jdbcType="REAL" property="inmoney" />
+    <result column="realmoney" jdbcType="REAL" property="realmoney" />
+    <result column="takemoney" jdbcType="REAL" property="takemoney" />
+    <result column="takerealmoney" jdbcType="REAL" property="takerealmoney" />
+  </resultMap>
+   
+  <sql id="queryCondition">
+      <if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and s.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>
+  </sql>
+  <!-- 以下为扩展 -->
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >       		
+		select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,1 as action,0 as unit,COUNT(*) as incount,SUM(s.money) as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim> 
+		GROUP BY s.makeOpCode, s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,1 as action,1 as unit,COUNT(*) as incount,SUM(s.money) as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select t.makeOpCode,a.accountName,t.cashierNo,t.storeintime,0 as type,2 as action,0 as unit,COUNT(*),SUM(t.money)
+		from takeoutrecord t
+		LEFT JOIN account a on t.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= t.terminalid  
+		<!-- LEFT JOIN storeinrecord s 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime) -->       
+		where 1=1 and te.areacode!="040400" and type=2
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>     
+		GROUP BY t.makeOpCode,t.cashierNo,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select t.makeOpCode,a.accountName,t.cashierNo,t.storeintime,0 as type,2 as action,1 as unit,COUNT(*),SUM(t.money)
+		from takeoutrecord t 
+		LEFT JOIN account a on t.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= t.terminalid  
+		<!-- LEFT JOIN storeinrecord s 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)  -->      
+		where 1=1 and te.areacode="040400" and type=2
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>     
+		GROUP BY t.makeOpCode,t.cashierNo,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,0 as type,3 as action,0 as unit,COUNT(*),SUM(t.money)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid  
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode!="040400" and t.type=7 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>    
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,0 as type,3 as action,1 as unit,COUNT(*),SUM(t.money)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= s.terminalid   
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=7 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,4 as action,0 as unit,COUNT(*),SUM(t.realmoney)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= s.terminalid 
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=3 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,4 as action,1 as unit,COUNT(*)as misscount,SUM(t.realmoney)as missmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=3 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		<!-- (select 0 as makeOpCode,0 as accountName,0 as cashierNo,0 as storeintime,2 as type,5 as action,2 as unit,0 as misscount,(SUM(s.money)+SUM(t.money))as missmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 -->
+		
+		(select DISTINCT 0 as makeOpCode,0 as accountName,0 as cashierNo,0 as storeintime,2 as type,5 as action,2 as unit,0 as misscount,
+		 (SELECT ifnull(sum(Money),0) from storeinrecord s,account a where a.accountcode=s.makeopcode 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		  )+
+		(SELECT ifnull(sum(Money),0) from takeoutrecord t, account a where a.accountcode=t.makeopcode 
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+		)as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 )
+        
+       <!-- GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ) -->
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT count(*) from(
+        select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,1 as action,0 as unit,COUNT(*) as incount,SUM(s.money) as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim> 
+		GROUP BY s.makeOpCode, s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,1 as action,1 as unit,COUNT(*) as incount,SUM(s.money) as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select t.makeOpCode,a.accountName,t.cashierNo,t.storeintime,0 as type,2 as action,0 as unit,COUNT(*),SUM(t.money)
+		from takeoutrecord t
+		LEFT JOIN account a on t.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= t.terminalid  
+		<!-- LEFT JOIN storeinrecord s 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime) -->       
+		where 1=1 and te.areacode!="040400" and type=2
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>     
+		GROUP BY t.makeOpCode,t.cashierNo,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select t.makeOpCode,a.accountName,t.cashierNo,t.storeintime,0 as type,2 as action,1 as unit,COUNT(*),SUM(t.money)
+		from takeoutrecord t 
+		LEFT JOIN account a on t.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= t.terminalid  
+		<!-- LEFT JOIN storeinrecord s 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)  -->      
+		where 1=1 and te.areacode="040400" and type=2
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>     
+		GROUP BY t.makeOpCode,t.cashierNo,DATE_FORMAT( t.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,0 as type,3 as action,0 as unit,COUNT(*),SUM(t.money)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid  
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and te.areacode!="040400" and t.type=7 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>    
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,0 as type,3 as action,1 as unit,COUNT(*),SUM(t.money)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= s.terminalid   
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=7 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,4 as action,0 as unit,COUNT(*),SUM(t.realmoney)
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode 
+		LEFT JOIN terminal te on te.terminalID= s.terminalid 
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=3 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		(select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,1 as type,4 as action,1 as unit,COUNT(*)as misscount,SUM(t.realmoney)as missmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 and t.type=3 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>     
+		GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" ))
+		UNION
+		<!-- (select 0 as makeOpCode,0 as accountName,0 as cashierNo,0 as storeintime,2 as type,5 as action,2 as unit,0 as misscount,(SUM(s.money)+SUM(t.money))as missmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 -->
+		
+		(select DISTINCT 0 as makeOpCode,0 as accountName,0 as cashierNo,0 as storeintime,2 as type,5 as action,2 as unit,0 as misscount,
+		 (SELECT ifnull(sum(Money),0) from storeinrecord s,account a where a.accountcode=s.makeopcode 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		  )+
+		(SELECT ifnull(sum(Money),0) from takeoutrecord t, account a where a.accountcode=t.makeopcode 
+		<if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>      
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and t.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( t.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+      <if test="queryParam.starttime!= null and queryParam.starttime!=''">
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") >= #{queryParam.starttime} 
+      </if>
+      <if test="queryParam.endtime!= null and queryParam.endtime!=''">
+          <![CDATA[
+            and DATE_FORMAT( storeInTime, "%Y-%m-%d") <= #{queryParam.endtime} 
+          ]]>
+      </if>  
+		)as inmoney
+		from storeinrecord s 
+		LEFT JOIN account a on s.makeOpCode=a.accountCode
+		LEFT JOIN terminal te on te.terminalID= s.terminalid
+		LEFT JOIN takeoutrecord t 
+		on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+		and t.storeintime=s.storeInTime)       
+		where 1=1 
+        ))as count
+  </select>
+  <select id="getLists" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >       
+		select 1 as type,0 as action,
+		(select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(money) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+		select 1 as type,1 as action,
+		(select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(money) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from storeinrecord s where 1=1
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(money) from storeinrecord s where 1=1 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+		select 2 as type,0 as action,
+		(select count(*) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and s.type=2 and te.areacode!="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as outcount,
+		(select sum(money) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and s.type=2 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as outmoney
+		UNION
+		SELECT 2 as type,1 as action,
+		(select count(*) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and s.type=2 and te.areacode="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as outcount,
+		(select sum(money) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and s.type=2 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as outmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord s where s.type=2 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(money) from takeoutrecord s where s.type=2
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+		SELECT 3 as type,0 as action,
+		(SELECT COUNT(*) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=7 and te.areacode!="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		) as count,
+		(SELECT sum(money) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=7 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as cancelmoney
+		UNION
+		SELECT  3 as type,1 as action,
+		(SELECT COUNT(*) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=7 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		) as count,
+		(SELECT sum(money) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=7 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as cancelmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord s where s.type=7 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(money) from takeoutrecord s where s.type=7
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+		SELECT 4 as type,0 as action,
+		(select count(*) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=3 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as misscount,
+		(select sum(realmoney) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=3 and te.areacode!="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as missmoney
+		UNION
+		SELECT 4 as type,1 as action,
+		(select count(*) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=3 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as misscount,
+		(select sum(realmoney) from takeoutrecord s,terminal te where te.terminalID= s.terminalid and s.type=3 and te.areacode="040400"
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as missmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord s where s.type=3 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as incount,
+		(select sum(realMoney) from takeoutrecord s where s.type=3
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)as inmoney
+		UNION
+       SELECT 5 as type,0 as action,
+		((select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)- 
+		(select count(*) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" and s.type=7 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)
+		) as incount,
+		((select sum(s.money) from storeinrecord s LEFT JOIN terminal te on te.terminalID= s.terminalid where te.areacode!="040400" 
+		<trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)+(
+		 select sum(Money) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )-(select ifnull(sum(realMoney),0) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" and s.type=3 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )
+		)as inmoney
+		UNION
+		SELECT 5 as type,1 as action,
+		((select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)- 
+		(select count(*) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" and s.type=7 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)
+		) as incount,
+		((select sum(s.money) from storeinrecord s LEFT JOIN terminal te on te.terminalID= s.terminalid where te.areacode="040400" 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)+(
+		 select sum(Money) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )-(select ifnull(sum(realMoney),0) from takeoutrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" and s.type=3 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )
+		)as inmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		((select count(*) from storeinrecord s where 1=1 
+		 <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)-
+		 (select count(*) from takeoutrecord s where s.type =7 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )
+		) as incount,
+		((select sum(s.money) from storeinrecord s where 1=1 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		)+(
+		 select sum(Money) from takeoutrecord s where 1=1 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )-(select ifnull(sum(realMoney),0) from takeoutrecord s where s.type=3 
+		  <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+		 )
+		)as inmoney	
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCounts" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        select count(*) from (
+		select 1 as type,0 as action,
+		(select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400")as incount,
+		(select sum(money) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode!="040400" )as inmoney
+		UNION
+		select 1 as type,1 as action,
+		(select count(*) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400")as incount,
+		(select sum(money) from storeinrecord s, terminal te where te.terminalID= s.terminalid and te.areacode="040400" )as inmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from storeinrecord )as incount,
+		(select sum(money) from storeinrecord)as inmoney
+		UNION
+		select 2 as type,0 as action,
+		(select count(*) from takeoutrecord t, terminal te where te.terminalID= t.terminalid and te.areacode!="040400")as outcount,
+		(select sum(money) from takeoutrecord t, terminal te where te.terminalID= t.terminalid and te.areacode!="040400")as outmoney
+		UNION
+		SELECT 2 as type,1 as action,
+		(select count(*) from takeoutrecord t, terminal te where te.terminalID= t.terminalid and te.areacode="040400")as outcount,
+		(select sum(money) from takeoutrecord t, terminal te where te.terminalID= t.terminalid and te.areacode="040400")as outmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord )as incount,
+		(select sum(money) from takeoutrecord)as inmoney
+		UNION
+		SELECT 3 as type,0 as action,
+		(SELECT COUNT(*) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=7 and te.areacode!="040400") as count,
+		(SELECT sum(money) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=7 and te.areacode!="040400")as cancelmoney
+		UNION
+		SELECT  3 as type,1 as action,
+		(SELECT COUNT(*) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=7 and te.areacode="040400") as count,
+		(SELECT sum(money) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=7 and te.areacode="040400")as cancelmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord where type=7)as incount,
+		(select sum(money) from takeoutrecord where type=7)as inmoney
+		UNION
+		SELECT 4 as type,0 as action,
+		(select count(*) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=3 and te.areacode!="040400")as misscount,
+		(select sum(realmoney) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=3 and te.areacode!="040400")as missmoney
+		UNION
+		SELECT 4 as type,1 as action,
+		(select count(*) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=3 and te.areacode="040400")as misscount,
+		(select sum(realmoney) from takeoutrecord t,terminal te where te.terminalID= t.terminalid and t.type=3 and te.areacode="040400")as missmoney
+		UNION
+		SELECT 0 as type,2 as action,
+		(select COUNT(*) from takeoutrecord where type=3)as incount,
+		(select sum(realMoney) from takeoutrecord where type=3)as inmoney)as count 
+  </select>
+  
+</mapper>

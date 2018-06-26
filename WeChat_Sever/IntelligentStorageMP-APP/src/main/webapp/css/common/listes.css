@@ -1,0 +1,56 @@
+.list .btn_another input {
+	width: 88px !important;
+	height: 24px !important;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	background: #74a3dc;
+	border: none;
+	cursor: pointer;
+	font-family: "Î¢ÈíÑÅºÚ";
+	color: #fff;
+	font-size: 14px;
+}
+
+.list .btn_another input:hover {
+	background-color: #189ad8;
+}
+
+.confirm {
+	width: 100% !important;
+	float: left;
+}
+
+.confirm input {
+	margin-left: 40px;
+}
+
+.list li {
+	height: 35px;
+}
+
+.bottom-input {
+	width: 70%;
+	float: right;
+	margin-top: 10px;
+}
+
+.bottom-input li {
+	width: 320px;
+	float: right;
+	text-align: right;
+}
+
+.bottom-input li input {
+	width: 200px;
+	height: 24px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.fm-button {
+	padding: .0em 1.4em .2em 1.3em;
+}
+
+td#datatable_toppager_center {
+	display: none;
+}

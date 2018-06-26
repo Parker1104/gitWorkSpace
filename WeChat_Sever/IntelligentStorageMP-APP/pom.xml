@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<profiles>  
+	    <profile>  
+	        <id>jdk-1.7</id>  
+	        <activation>  
+	            <activeByDefault>true</activeByDefault>  
+	            <jdk>1.7</jdk>  
+	        </activation>  
+	        <properties>  
+	            <maven.compiler.source>1.7</maven.compiler.source>  
+	            <maven.compiler.target>1.7</maven.compiler.target>  
+	            <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>  
+	        </properties>  
+	    </profile>  
+	</profiles>  
+	<parent>
+		<artifactId>IntelligentStorageMP</artifactId>
+		<groupId>com.hzdongcheng.softwareplatform</groupId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>IntelligentStorageMP-APP</artifactId>
+	<packaging>war</packaging>
+	<name>IntelligentStorageMP-APP</name>
+	
+   <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	
+	<build>
+		<plugins>
+			<!-- <plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty</artifactId>
+				<version>6.1.7</version>
+				<configuration>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8888</port>
+							<maxIdleTime>30000</maxIdleTime>
+						</connector>
+						
+					</connectors>
+					<webAppSourceDirectory>${project.build.directory}/${project.artifactId}-${project.version}</webAppSourceDirectory>
+					<contextPath>/</contextPath>
+				</configuration>
+			</plugin> -->
+			
+	  	 <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+                <encoding>UTF-8</encoding>
+                <compilerArguments>
+                   <extdirs>src\main\webapp\WEB-INF\lib</extdirs>
+                </compilerArguments>
+            </configuration>
+        </plugin>  
+			
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.hzdongcheng.softwareplatform</groupId>
+			<artifactId>IntelligentStorageMP-BLL</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+	</dependencies>
+</project>

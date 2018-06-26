@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<appconfig>
+ 
+    <!--memcached setting-->
+	<mcconfig>
+		<memCache>true</memCache>
+		<servers>127.0.0.1:11211</servers>
+		<weights>6</weights>
+		<initConn>10</initConn>
+		<minConn>10</minConn>
+		<maxConn>100</maxConn>
+		<maxIdle>3600000</maxIdle>
+		
+		<!--lockerSessionIdle (s) 15minute = 900s -->
+		<lockerSessionIdle>900</lockerSessionIdle>
+	</mcconfig>
+ 
+    
+</appconfig>

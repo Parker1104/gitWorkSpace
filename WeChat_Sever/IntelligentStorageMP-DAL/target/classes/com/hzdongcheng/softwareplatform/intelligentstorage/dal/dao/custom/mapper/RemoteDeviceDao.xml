@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.RemoteDeviceDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.RemoteDeviceEx">
+    <id column="terminalID" jdbcType="VARCHAR" property="terminalid" />
+    <result column="areaCode" jdbcType="VARCHAR" property="areacode" />
+    <result column="businessCode" jdbcType="INTEGER" property="busBusinesscode" />
+    <result column="configName" jdbcType="VARCHAR" property="configname" />
+    <result column="displayName" jdbcType="VARCHAR" property="displayname" />
+    <result column="businessCode" jdbcType="INTEGER" property="businesscode" />
+    <result column="Address" jdbcType="VARCHAR" property="address" />
+    <result column="totalBoxNumber" jdbcType="INTEGER" property="totalboxnumber" />
+    <result column="IpAddr" jdbcType="VARCHAR" property="ipaddr" />
+    <result column="macAddress" jdbcType="VARCHAR" property="macaddress" />
+    <result column="runStatus" jdbcType="TINYINT" property="runstatus" />
+    <result column="networkState" jdbcType="TINYINT" property="networkstate" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="longitode" jdbcType="VARCHAR" property="longitode" />
+    <result column="dimension" jdbcType="VARCHAR" property="dimension" />
+    <result column="registerFlag" jdbcType="VARCHAR" property="registerflag" />
+    <result column="makeDate" jdbcType="TIMESTAMP" property="makedate" />
+    <result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="makeOpCode" jdbcType="VARCHAR" property="makeopcode" />
+    <result column="boxID" jdbcType="INTEGER" property="boxid" />
+    <result column="dispalyName" jdbcType="VARCHAR" property="dispalyname" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="open" jdbcType="TINYINT" property="open" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    terminalID, areaCode, businessCode, configName, displayName, businessCode, Address, 
+    totalBoxNumber, IpAddr, macAddress, runStatus, networkState, version, longitode, 
+    dimension, registerFlag, makeDate, lastModifyTime, memo, makeOpCode
+  </sql>
+  <sql id="queryCondition">
+      <if test="queryParam.displayname!= null and queryParam.displayname!=''">
+            and terminal.displayName = #{queryParam.displayname} 
+      </if>
+      <if test="queryParam.boxid!= null and queryParam.boxid!=0">
+            and box.boxid >= #{queryParam.boxid} 
+      </if>
+      <if test="queryParam.businesscode!= null and queryParam.businesscode!=0">
+          <![CDATA[
+            and box.boxid <= #{queryParam.businesscode} 
+          ]]>
+      </if>
+  </sql>
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+        SELECT
+        box.terminalID,
+        box.boxID,
+        box.open,
+        terminal.displayName,
+        box.dispalyName,
+        box.status
+        FROM terminal LEFT JOIN  box ON terminal.terminalID = box.terminalID
+        WHERE 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT
+        count(1)
+        FROM terminal LEFT JOIN  box ON terminal.terminalID = box.terminalID
+        WHERE 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+  </select> 
+  <!-- <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from terminal
+    where terminalID = #{terminalid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from terminal
+    where terminalID = #{terminalid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.entity.TerminalEntity">
+    insert into terminal (terminalID, areaCode, Bus_businessCode, 
+      configName, displayName, businessCode, 
+      Address, totalBoxNumber, IpAddr, 
+      macAddress, runStatus, networkState, 
+      version, longitode, dimension, 
+      registerFlag, makeDate, lastModifyTime, 
+      memo, makeOpCode)
+    values (#{terminalid,jdbcType=VARCHAR}, #{areacode,jdbcType=VARCHAR}, #{busBusinesscode,jdbcType=INTEGER}, 
+      #{configname,jdbcType=VARCHAR}, #{displayname,jdbcType=VARCHAR}, #{businesscode,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{totalboxnumber,jdbcType=INTEGER}, #{ipaddr,jdbcType=VARCHAR}, 
+      #{macaddress,jdbcType=VARCHAR}, #{runstatus,jdbcType=TINYINT}, #{networkstate,jdbcType=TINYINT}, 
+      #{version,jdbcType=VARCHAR}, #{longitode,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR}, 
+      #{registerflag,jdbcType=VARCHAR}, #{makedate,jdbcType=TIMESTAMP}, #{lastmodifytime,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR}, #{makeopcode,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update terminal
+    <set>
+      <if test="record.terminalid != null">
+        terminalID = #{record.terminalid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areacode != null">
+        areaCode = #{record.areacode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busBusinesscode != null">
+        Bus_businessCode = #{record.busBusinesscode,jdbcType=INTEGER},
+      </if>
+      <if test="record.configname != null">
+        configName = #{record.configname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayname != null">
+        displayName = #{record.displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businesscode != null">
+        businessCode = #{record.businesscode,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        Address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalboxnumber != null">
+        totalBoxNumber = #{record.totalboxnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ipaddr != null">
+        IpAddr = #{record.ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.macaddress != null">
+        macAddress = #{record.macaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.runstatus != null">
+        runStatus = #{record.runstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.networkstate != null">
+        networkState = #{record.networkstate,jdbcType=TINYINT},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitode != null">
+        longitode = #{record.longitode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dimension != null">
+        dimension = #{record.dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerflag != null">
+        registerFlag = #{record.registerflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makedate != null">
+        makeDate = #{record.makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastmodifytime != null">
+        lastModifyTime = #{record.lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeopcode != null">
+        makeOpCode = #{record.makeopcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update terminal
+    set terminalID = #{record.terminalid,jdbcType=VARCHAR},
+      areaCode = #{record.areacode,jdbcType=VARCHAR},
+      Bus_businessCode = #{record.busBusinesscode,jdbcType=INTEGER},
+      configName = #{record.configname,jdbcType=VARCHAR},
+      displayName = #{record.displayname,jdbcType=VARCHAR},
+      businessCode = #{record.businesscode,jdbcType=INTEGER},
+      Address = #{record.address,jdbcType=VARCHAR},
+      totalBoxNumber = #{record.totalboxnumber,jdbcType=INTEGER},
+      IpAddr = #{record.ipaddr,jdbcType=VARCHAR},
+      macAddress = #{record.macaddress,jdbcType=VARCHAR},
+      runStatus = #{record.runstatus,jdbcType=TINYINT},
+      networkState = #{record.networkstate,jdbcType=TINYINT},
+      version = #{record.version,jdbcType=VARCHAR},
+      longitode = #{record.longitode,jdbcType=VARCHAR},
+      dimension = #{record.dimension,jdbcType=VARCHAR},
+      registerFlag = #{record.registerflag,jdbcType=VARCHAR},
+      makeDate = #{record.makedate,jdbcType=TIMESTAMP},
+      lastModifyTime = #{record.lastmodifytime,jdbcType=TIMESTAMP},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      makeOpCode = #{record.makeopcode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.entity.TerminalEntity">
+    update terminal
+    <set>
+      <if test="areacode != null">
+        areaCode = #{areacode,jdbcType=VARCHAR},
+      </if>
+      <if test="busBusinesscode != null">
+        Bus_businessCode = #{busBusinesscode,jdbcType=INTEGER},
+      </if>
+      <if test="configname != null">
+        configName = #{configname,jdbcType=VARCHAR},
+      </if>
+      <if test="displayname != null">
+        displayName = #{displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="businesscode != null">
+        businessCode = #{businesscode,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="totalboxnumber != null">
+        totalBoxNumber = #{totalboxnumber,jdbcType=INTEGER},
+      </if>
+      <if test="ipaddr != null">
+        IpAddr = #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="macaddress != null">
+        macAddress = #{macaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="runstatus != null">
+        runStatus = #{runstatus,jdbcType=TINYINT},
+      </if>
+      <if test="networkstate != null">
+        networkState = #{networkstate,jdbcType=TINYINT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="longitode != null">
+        longitode = #{longitode,jdbcType=VARCHAR},
+      </if>
+      <if test="dimension != null">
+        dimension = #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="registerflag != null">
+        registerFlag = #{registerflag,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        makeDate = #{makedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifytime != null">
+        lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="makeopcode != null">
+        makeOpCode = #{makeopcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where terminalID = #{terminalid,jdbcType=VARCHAR}
+  </update> -->
+</mapper>

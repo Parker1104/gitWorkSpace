@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.BoxDoorUsageDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.BoxDoorUsage">   
+    <id column="terminalid" jdbcType="VARCHAR" property="terminalid" />
+    <result column="displayname" jdbcType="VARCHAR" property="displayname" />
+    <result column="totalboxnumber" jdbcType="VARCHAR" property="totalboxnumber" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="takecount" jdbcType="INTEGER" property="takecount" />
+  </resultMap>
+   
+  <sql id="queryCondition">
+      <if test="queryParam.terminalid!= null and queryParam.terminalid!=''">
+            and s.terminalid = #{queryParam.terminalid} 
+      </if>
+      <if test="queryParam.displayname!= null and queryParam.displayname!=''">
+            and t.displayname = #{queryParam.displayname} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+  </sql>
+  <!-- 以下为扩展 -->
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+       select t.displayname,s.storeInTime,t.totalBoxNumber,COUNT(s.storeInTime) as count,COUNT(td.taketime)as takecount from storeinrecord s LEFT JOIN terminal t on t.terminalid=s.terminalID 
+       LEFT JOIN takeoutrecord td on (td.terminalid=s.terminalID and td.boxid=s.boxID and td.storeintime=s.storeInTime and td.usercardid=s.userCardID)
+       where 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.terminalID,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT COUNT(*) from (select t.displayname,t.totalBoxNumber,COUNT(s.storeInTime) as count,COUNT(td.taketime)as takecount from storeinrecord s LEFT JOIN terminal t on t.terminalid=s.terminalID 
+        LEFT JOIN takeoutrecord td on (td.terminalid=s.terminalID and td.boxid=s.boxID and td.storeintime=s.storeInTime and td.usercardid=s.userCardID)			
+        where 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.terminalID,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )) as a 
+  </select>
+  
+</mapper>

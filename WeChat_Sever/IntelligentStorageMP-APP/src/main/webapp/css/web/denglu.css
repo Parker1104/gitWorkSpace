@@ -1,0 +1,162 @@
+@charset "utf-8";
+/* CSS Document */
+body, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ul, ol, li, form, legend, button, input, textarea, th, td, input, aside, article, section, nav, pre, figure {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: url(/images/bg.jpg) repeat-x;
+	font: 12px/1.5 tahoma, arial, 'Microsoft YaHei', simsun;
+}
+input, select, option, textarea, button {
+	font: 12px/1.5 tahoma, arial, 'Microsoft YaHei', simsun;
+}
+a {
+	color: #777;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+h1 {
+	font-size: 18px;
+}
+h2 {
+	font-size: 16px;
+}
+h3 {
+	font-size: 14px;
+}
+h4 {
+	font-size: 14px;
+}
+h5 {
+	font-size: 12px;
+}
+h6 {
+	font-size: 12px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+.fs14 {
+	font-size: 14px !important
+}
+.fs16 {
+	font-size: 16px !important
+}
+.mr10 {
+	margin-right: 10px !important
+}
+.mt15 {
+	margin-top: 15px !important;
+}
+.mb20 {
+	margin-bottom: 20px !important
+}
+.mb30 {
+	margin-bottom: 30px !important
+}
+.mt130 {
+	margin-top: 130px !important;
+}
+.mt260 {
+	margin-top: 260px !important;
+}
+.ml680 {
+	margin-left: 680px !important;
+}
+.pl15 {
+	padding-left: 15px !important
+}
+.pt50 {
+	padding-top: 50px !important;
+}
+.bc-blue {
+	background: #2c699f !important
+}
+.color-white {
+	color: #FFF !important
+}
+.float-left {
+	float: left !important;
+	left: 0 !important;
+}
+.float-right {
+	float: right !important;
+	right: 0 !important;
+}
+.text-center {
+	text-align: center !important;
+}
+.text-right {
+	text-align: right !important;
+}
+.over-hidden {
+	overflow: hidden !important;
+}
+.bg {
+	background: url(/images/top_bg.jpg) no-repeat
+}
+.w60 {
+	width: 60px
+}
+.w180 {
+	width: 180px
+}
+.w300 {
+	width: 300px
+}
+.w360 {
+	width: 360px
+}
+.w385 {
+	width: 385px
+}
+.w1300 {
+	width: 1300px;
+	margin: 0 auto
+}
+input {
+	height: 50px;
+	line-height: 50px;
+	background: #cfddea;
+	border-radius: 5px;
+	border: none
+}
+ input::-webkit-input-placeholder {
+ color:#BBB;
+}
+input:-moz-placeholder {
+ color:#BBB;
+}
+input::-moz-placeholder {
+ color:#BBB;
+}
+input:-ms-input-placeholder {
+ color:#BBB;
+}
+.cursor {
+	cursor: pointer
+}
+.box-shadow {
+	box-shadow: 0 2px 2px #555
+}
+.ml10 {
+	margin-left: 10px !important
+}
+.mt50 {
+	margin-top: 50px !important;
+}
+.bc-gray {
+	background: #f3f3f3 !important
+}
+.radius {
+	border-radius: 4px
+}
+.line2 {
+	line-height: 3
+}
+.color-red {
+	color: #d6222d !important
+}

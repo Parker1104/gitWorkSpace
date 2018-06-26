@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 加载配置文件 -->
+	<properties resource="jdbc-mysql.properties"></properties>
+	<!-- tk.mybatis.mapper.generator.TkMyBatis3Impl实现修改Mapper的后缀。在Table属性中通过{0}Dao，
+		<context id="mysql" defaultModelType="flat" targetRuntime="tk.mybatis.mapper.generator.TkMyBatis3Impl">
+	-->
+	<context id="mysql" defaultModelType="flat" targetRuntime="MyBatis3">
+		<!-- 当表名或者字段名为SQL关键字的时候，可以设置该属性为true，MBG会自动给表名或字段名添加**分隔符** -->
+		<property name="autoDelimitKeywords" value="true" />
+		<!-- mysql 分隔符 -->
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<!-- 生成的Java文件的编码 -->
+		<property name="javaFileEncoding" value="UTF-8" />
+		<!-- 格式化java代码 -->
+		<property name="javaFormatter"
+			value="org.mybatis.generator.api.dom.DefaultJavaFormatter" />
+		<!-- 格式化XML代码 -->
+		<property name="xmlFormatter"
+			value="org.mybatis.generator.api.dom.DefaultXmlFormatter" />
+		
+		<!--通用Mapper插件
+			<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+				<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+			</plugin>
+		-->	
+		<commentGenerator>
+			<property name="suppressAllComments" value="false" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="${mysql.jdbc.driver}"
+			connectionURL="${mysql.jdbc.url}" userId="${mysql.jdbc.username}"
+			password="${mysql.jdbc.password}" />
+
+		<javaTypeResolver
+			type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+			<!-- true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型 false：默认， scale>0;length>18：使用BigDecimal; 
+				scale=0;length[10,18]：使用Long； scale=0;length[5,9]：使用Integer； scale=0;length<5：使用Short； -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- java模型创建器，是必须要的元素 负责： 
+			1，key类（见context的defaultModelType）；
+			2，java类； 
+			3，查询类 targetPackage：生成的类要放的包，真实的包受enableSubPackages属性控制； 
+			targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，
+			如果目录不存在，MBG不会自动建目录 -->
+		<javaModelGenerator
+			targetPackage="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.entity"
+			targetProject="src/main/java">
+			<!-- 禁用生成子包 -->
+			<property name="enableSubPackages" value="true" />
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成SQL map的XML文件生成器， 
+			注意，在Mybatis3之后，我们可以使用mapper.xml文件+Mapper接口（或者不用mapper接口）， 
+			或者只使用Mapper接口+Annotation，所以，如果 javaClientGenerator配置中配置了需要生成XML的话，
+			这个元素就必须配置 targetPackage/targetProject:同javaModelGenerator -->
+		<sqlMapGenerator
+			targetPackage="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.mapper"
+			targetProject="src/main/resources">
+			<!-- 禁用生成子包 -->
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 对于mybatis来说，即生成Mapper接口， 
+			注意，如果没有配置该元素， 那么默认不会生成Mapper接口 targetPackage/targetProject: 
+			同javaModelGenerator type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下） ： 
+			1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中）， 不会生成对应的XML； 
+			2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中； 
+			3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML； 注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER -->
+		<javaClientGenerator
+			targetPackage="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.table.mapper"
+			targetProject="src/main/java" type="XMLMAPPER">
+			<!-- 禁用生成子包 -->
+			<property name="enableSubPackages" value="true" />
+			<!-- rootInterface要求所有mapper接口都继承指定接口 <property name="rootInterface" value="" 
+				/> -->
+		</javaClientGenerator>
+		
+		<!-- <table tableName="Account" domainObjectName="AccountEntity" mapperName="AccountEntityDao" />
+		<table tableName="SystemInfo" domainObjectName="SystemInfoEntity" mapperName="SystemInfoEntityDao" />
+		<table tableName="Menu" domainObjectName="MenuEntity" mapperName="MenuEntityDao" />
+		<table tableName="MenuRights" domainObjectName="MenuRightsEntity" mapperName="MenuRightsEntityDao" />
+		<table tableName="Role" domainObjectName="RoleEntity" mapperName="RoleEntityDao">
+			 <generatedKey column="roleCode" sqlStatement="MySql" identity="true"/>
+		</table>
+		
+		
+		<table tableName="Area" domainObjectName="AreaEntity" mapperName="AreaEntityDao" />
+		<table tableName="Dict" domainObjectName="DictEntity" mapperName="DictEntityDao" />
+		<table tableName="CardTransRule" domainObjectName="CardTransRuleEntity" mapperName="CardTransRuleEntityDao">
+			<generatedKey column="transRuleCode" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="RunTime" domainObjectName="RunTimeEntity" mapperName="RunTimeEntityDao" >
+			<generatedKey column="runTimeCode" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="BoxSize" domainObjectName="BoxSizeEntity" mapperName="BoxSizeEntityDao" >
+			<generatedKey column="boxTypeCode" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="Company" domainObjectName="CompanyEntity" mapperName="CompanyEntityDao" />
+		<table tableName="PaymentMaster" domainObjectName="PaymentMasterEntity" mapperName="PaymentMasterEntityDao" >
+			<generatedKey column="masterID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="PaymentDetail" domainObjectName="PaymentDetailEntity" mapperName="PaymentDetailEntityDao" />
+		
+		<table tableName="Terminal" domainObjectName="TerminalEntity" mapperName="TerminalEntityDao" />
+		<table tableName="Box" domainObjectName="BoxEntity" mapperName="BoxEntityDao" />
+		<table tableName="BusinessModel" domainObjectName="BusinessModelEntity" mapperName="BusinessModelEntityDao" >
+			<generatedKey column="businessCode" sqlStatement="MySql" identity="true"/>
+		</table>
+		
+		<table tableName="CardAndBoxBound" domainObjectName="CardAndBoxBoundEntity" mapperName="CardAndBoxBoundEntityDao" />
+		
+		
+		<table tableName="User" domainObjectName="UserEntity" mapperName="UserEntityDao" />
+		<table tableName="Manager" domainObjectName="ManagerEntity" mapperName="ManagerEntityDao" />
+		<table tableName="ManagerCheckInRecord" domainObjectName="ManagerCheckInRecordEntity" mapperName="ManagerCheckInRecordEntityDao" />
+	
+		<table tableName="StoreInRecord" domainObjectName="StoreInRecordEntity" mapperName="StoreInRecordEntityDao" />
+		<table tableName="MidwayTakeRecord" domainObjectName="MidwayTakeRecordEntity" mapperName="MidwayTakeRecordEntityDao" />
+		<table tableName="TakeOutRecord" domainObjectName="TakeOutRecordEntity" mapperName="TakeOutRecordEntityDao" />
+		<table tableName="PunishRecord" domainObjectName="PunishRecordEntity" mapperName="PunishRecordEntityDao" />
+		
+		<table tableName="OperatorDiary" domainObjectName="OperatorDiaryEntity" mapperName="OperatorDiaryEntityDao" />
+		<table tableName="RemoteCtrlDiary" domainObjectName="RemoteCtrlDiaryEntity" mapperName="RemoteCtrlDiaryEntityDao" /> 
+		<table tableName="TerminalAlarmDiary" domainObjectName="TerminalAlarmDiaryEntity" mapperName="TerminalAlarmDiaryEntityDao" />
+		<table tableName="WeChatMessage" domainObjectName="WeChatMessageEntity" mapperName="WeChatMessageEntityDao" />
+		<table tableName="MessageNoticeRecord" domainObjectName="MessageNoticeRecordEntity" mapperName="MessageNoticeRecordEntityDao" />
+		-->
+		
+	    <!--  <table tableName="User" domainObjectName="UserEntity" mapperName="UserEntityDao" /> -->
+ 
+		<!--  <table tableName="AppPartner" domainObjectName="AppPartnerEntity"  mapperName="AppPartnerEntityDao" 
+		       enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+		       enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+	     -->
+ 
+		<!--  <table tableName="Ptreadypackage" domainObjectName="PtreadypackageEntity" mapperName="PtreadypackageEntityDao" />   --> 
+	    <!--  <table tableName="AppPartner"     domainObjectName="AppPartnerEntity"      mapperName="AppPartnerEntityDao"  />   -->
+ 
+        <!--  <table tableName="ApppartnerTerminal"     domainObjectName="ApppartnerTerminalEntity"      mapperName="ApppartnerTerminalEntityDao"  />
+         -->	
+             <!-- 
+           <table tableName="Terminal" domainObjectName="TerminalEntity" mapperName="TerminalEntityDao" />  
+         	 --> 
+         	 
+       <!--  <table tableName="Area" domainObjectName="AreaEntity" mapperName="AreaEntityDao" /> -->
+         	 
+      <!--   <table tableName="Wxmenu"  domainObjectName="WxmenuEntity" mapperName="WxmenuEntityDao"  >
+		 
+			<columnOverride column="contentes" javaType="java.lang.String" jdbcType="VARCHAR" /> 
+		</table>    -->
+         	 
+         	 
+     <!--   <table tableName="TerminalWeixin" domainObjectName="TerminalWeixinEntity" mapperName="TerminalWeixinEntityDao" />   -->
+         	    
+     <table tableName="Ptreadypackage" domainObjectName="PtreadypackageEntity" mapperName="PtreadypackageEntityDao" />     
+	</context>
+</generatorConfiguration>
+
+
+
+
+
+
+
+
+
+

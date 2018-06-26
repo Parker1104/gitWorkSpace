@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.mapper.CashierStatisticDao">
+  <resultMap id="BaseResultMap" type="com.hzdongcheng.softwareplatform.intelligentstorage.dal.dao.custom.entity.CashierStatistic">   
+    <id column="makeopcode" jdbcType="VARCHAR" property="makeopcode" />
+    <result column="cashierno" jdbcType="VARCHAR" property="cashierno" />
+    <result column="storeintime" jdbcType="DATE" property="storeintime" />
+    <result column="accountname" jdbcType="VARCHAR" property="accountname" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="realmoney" jdbcType="REAL" property="realmoney" />
+    <result column="takemoney" jdbcType="REAL" property="takemoney" />
+    <result column="takerealmoney" jdbcType="REAL" property="takerealmoney" />
+  </resultMap>
+   
+  <sql id="queryCondition">
+      <if test="queryParam.accountname!= null and queryParam.accountname!=''">
+            and a.accountName = #{queryParam.accountname} 
+      </if>
+      <if test="queryParam.cashierno!= null and queryParam.cashierno!=''">
+            and s.cashierno = #{queryParam.cashierno} 
+      </if>
+      <if test="queryParam.startdate!= null and queryParam.startdate!=''">
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") >= #{queryParam.startdate} 
+      </if>
+      <if test="queryParam.enddate!= null and queryParam.enddate!=''">
+          <![CDATA[
+            and DATE_FORMAT( s.storeInTime, "%Y-%m-%d") <= #{queryParam.enddate} 
+          ]]>
+      </if>
+  </sql>
+  <!-- 以下为扩展 -->
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.hzdongcheng.components.toolkits.utils.Page" >
+       select s.makeOpCode,a.accountName,s.cashierNo,s.storeintime,sum(t.money)as takemoney,SUM(t.realMoney)as takerealmoney,SUM(s.money)as money,SUM(s.realMoney)as realmoney,(SELECT COUNT(*) from takeoutrecord where type=7) as count,(SELECT SUM(money) from takeoutrecord where type=7)as cancelmoney from storeinrecord s LEFT JOIN 
+       account a on s.makeOpCode=a.accountCode  LEFT JOIN takeoutrecord t on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+       and t.storeintime=s.storeInTime)       
+       where 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )
+        limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" parameterType="com.hzdongcheng.components.toolkits.utils.Page" resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM (select s.makeOpCode,a.accountName,s.cashierNo,sum(t.money)as takemoney,SUM(t.realMoney)as takerealmoney,SUM(s.money)as money,SUM(s.realMoney)as realmoney from storeinrecord s LEFT JOIN 
+        account a on s.makeOpCode=a.accountCode  LEFT JOIN takeoutrecord t on (t.terminalid=s.terminalID and t.boxid=s.boxID and t.usercardid=s.userCardID
+        and t.storeintime=s.storeInTime)			
+        where 1=1
+        <trim suffixOverrides=",">
+            <include refid="queryCondition" />
+        </trim>
+        GROUP BY s.makeOpCode,s.cashierNo,DATE_FORMAT( s.storeInTime, "%Y-%m-%d" )) as a 
+  </select>
+  
+</mapper>

@@ -1,0 +1,101 @@
+﻿0=Success //正确
+1=Warning //警告
+-1=Operational parameter error //参数错误
+
+-9000=System Internal Error,please contact your system administrator
+-9001=Record does not exist
+-9997=WayPoint does not exist in the database information and can not query the distance voyage
+-9998=Account at another location of your login, you were forced to exit the system.\nIf this is not your own operation, then your password is likely to have leaked. \nI suggest you change your password.\n
+-9999=Session timeout, please re-login
+
+-120001=Country code already exists //国家代码已存在
+-120005=Data dictionary already exists //系统字典已经存在
+-130001=User does not logged in //操作员没有登陆 User does not login
+-130002=User logged in //操作员已经登陆 
+-130003=This function is not valid for you //此操作员没有开通此项功能
+-130004=User already exists  //用户已经存在
+-130005=The user has write-off //操作员已注销
+-130006=Operators do not need to enable the state to normal //操作员状态正常不需要启用
+-130007=Operator Role already exists //操作员角色已存在
+-130008=Operator status is not normal //操作员状态不正常
+-130009=System role can not modify //系统角色不能修改
+-130010=This email address already exists //EMAIL已经存在EMAIL already exists
+-130011=Password Error //用户密码错误
+-130012=The number of users you created has already exceeded the authorized //超过企业用户上限More than business users limit
+-130013=Over management of the user limit //超过管理部门用户上限
+-130014=User already exists can not be removed //系统管理员已经存在不允许增加
+-130015=Role name already exists //角色名称已存在
+-130016=Operator type is incorrect //操作员类别不正确
+-130017=Role already in use can not be removed //角色已经在使用不能删除
+-130018=Operator permissions setting information already exists //操作员权限设置信息已经存在
+-130019=Role permissions setting information already exists //角色权限设置信息已经存在
+-130020=Your corporate information must be entered //用户所属的企业信息必须输入
+-130021=Your department information must be entered //用户所属的部门信息必须输入
+-130022=Default group does not allow to delete //默认组不允许删除
+-130023=No login //禁止登录
+-130024=Account is not activated.Please log in to your mailbox, then activate your account.   //注册未激活不允许登录
+-130025=Your account has not been reviewed, temporarily not allowed to log in, please try again later.  //注册未审核不允许登录
+-130026=Account audit did not pass //审核未通过不允许登录
+-130027=Contact information already exists //联系人信息已存在
+-130028=System Group name does not allowed to modify //系统组名称不允许修改
+-130029=Group name already exists //组名称已经存在
+
+-130030=The user does not exist  //用户不存在
+-130031=Email does not exist  //Email不存在
+-130032=User name already exists //用户名称已经存在
+-130033=Username or password is wrong
+-130034=User in using,it is not deleted
+
+-130035=Failed to send confirm email, please check email address    //发送confirm email失败，请检查email地址
+-130036=Failed to send email, please check email address    //发送forgotpwd email失败，请检查email地址
+-130037=Your day limit is over.You can try again tomorrow //超过一天的找回密码次数限制
+-130038=The link is only available for once //链接仅能用一次
+
+-150001=运营网点已经存在
+-150002=网点已经在使用,不能删除
+-150003=超过管理部门的最大级别
+-150011=父管理部门编号不能和自己相同
+-150012=不能删除最最上级管理部门
+-150013=顶级管理部门不能修改自己的父管理部门
+-150023=注册未通过，请修改柜号
+-150024=投递局号不存在
+-150025=向国通注册失败
+-150033=设备没在线
+
+-310000=Company already exist //投递公司已经存在
+-310001=Company  name already exist //投递公司名称已经存在
+-310002=Prohibit to delete the company //禁止删除投递公司
+-310003=Prohibit to delete the postman //禁止删除投递员
+-310004=No right to operate the locker //无柜体操作权限
+-310005=Postman does not exist //投递员不存在
+-310066=Postman is logout or not activated //投递员已经注销或未激活
+-310006=Parcel had been deliveid //包裹已经做过投递
+-310008=Parcel does not exis //包裹不存在
+-310011=Available box is not found //未找到可用箱门
+-310013=Order is locked //订单已经锁定
+-310015=Order status abnormal //订单状态不正常
+
+-310021=Wrong barcode or password //包裹单号或提货码错误
+-310022=Wrong Mobile or password //手机号或提货码错误
+-310023=Wrong user's card No. or password //用户卡号或提货码错误
+-310024=Wrong barcode or Mobile or password //包裹单号(手机号)或提货码错误
+
+-310121=Send SMS fail //发送短消息失败
+-310151=Card No. is binding //卡号已经有人绑定
+-310152=Mobile No. is binding //手机号已经有人绑定
+-310153=Mobile No. format error //手机格式错误
+-310088=Generate PIN error //开箱密码重复
+
+-410000=服务已经存在
+-410001=服务名称已经存在
+-410010=短信账号已经存在
+-410011=短信账号名称已经存在
+-410013=运营网点账号已经存在
+-410021=计费方式不存在
+-410025=账单流水号不存在
+-410026=不允许删除账单流水
+
+-550001=Help remotely is expired
+
+-900001=elocker management system
+-900002=loading……
